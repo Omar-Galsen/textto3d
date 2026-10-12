@@ -44,7 +44,7 @@ def prepare_mesh(source, directory):
 class SpaceGenerator:
     def __init__(self, space='hysts/Shap-E', token=None):
         from gradio_client import Client
-        self.client = Client(space, token=token or None, verbose=False)
+        self.client = Client(space, hf_token=token or None, verbose=False)
 
     def generate(self, prompt, image, seed, steps, directory):
         from gradio_client import handle_file
