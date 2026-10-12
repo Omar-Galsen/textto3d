@@ -1,10 +1,11 @@
 import json
 import tempfile
 import unittest
+from unittest.mock import patch
 import zipfile
 from pathlib import Path
 import trimesh
-from pipeline import generate_batch, prepare_mesh
+from pipeline import generate_batch, prepare_mesh, SpaceGenerator
 
 class FakeGenerator:
     def __init__(self, fail=False): self.seeds = []; self.fail = fail
@@ -16,6 +17,11 @@ class FakeGenerator:
         return path
 
 class PipelineTests(unittest.TestCase):
+    def test_client_auth_parameter(self):
+        with patch("gradio_client.Client") as client:
+            SpaceGenerator(token="test")
+            client.assert_called_once_with("hysts/Shap-E", hf_token="test", verbose=False)
+
     def test_batch_seeds_exports_manifest(self):
         fake = FakeGenerator()
         rows, archive = generate_batch(fake, 'ninja', count=4, seed=42)
