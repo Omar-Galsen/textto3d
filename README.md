@@ -82,3 +82,18 @@ project. Upstream licenses and service terms remain applicable.
 Next: validate image-to-3D on the hosted API, add a stronger open-source backend,
 then rig the chosen mesh and export FBX with Blender. Training, rigging, reference
 image generation and FBX conversion are not implemented here.
+
+## Original Shap-E code retained
+
+`vendor/shap-e/` contains the unmodified OpenAI Python source, license and
+notebooks, pinned by `UPSTREAM.json`. Test without the shared demo API using
+[the direct inference instructions](scripts/SHAP_E_TEST.md):
+
+```bash
+python scripts/test_shap_e.py --verify-source
+python scripts/test_shap_e.py --prompt "A full body ninja wearing black clothing" --count 1
+```
+
+The direct CLI requires upstream dependencies and downloaded weights. The
+existing web app continues to use the hosted adapter. Retaining source is not
+training a new model or deploying a GPU server.
